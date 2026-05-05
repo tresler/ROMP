@@ -6,6 +6,4 @@ own-osc-player
 *.o
 
 # Local test data and config
-setup.txt
-media/
 *.log

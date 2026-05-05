@@ -1,6 +1,7 @@
 # ROMP — Raspberry OSC Media Player
  
 ![ROMP Logo](media/logo.jpg)
+
 ## Overview
 ROMP is a high-performance, lightweight media player designed specifically for the Raspberry Pi (optimized for RPi 4/5). It enables full remote control over video, audio, and image playback via the OSC (Open Sound Control) protocol.
 
@@ -18,7 +19,7 @@ Tested on: **Raspberry Pi OS Lite 64-bit (Trixie)**.
 - **Multi-Device Ready**: Unique indexing allows controlling specific units or global broadcast on the same network.
 - **Auto-setup**: Automated installer with systemd service integration.
 
-Additional capabilities:
+### Additional capabilities:
 - **Media Types**: Play videos, audio and image slideshows (with configurable timing and transitions).
 - **Playlist & Queue Control**: Queue multiple files, skip, loop, and manage ordered playback via OSC commands.
 - **Overlays & Info**: Toggle on-screen overlays with status, filename and optional captions.
@@ -103,5 +104,3 @@ ROMP is open-source. If you improve the code, fix a bug, or add a feature, pleas
 ## Disclaimer
 
 This README (and parts of this project's documentation) was created with the assistance of AI. Use the software and documentation at your own risk — the author(s) provide no warranty and accept no responsibility for any damage, data loss, or other consequences arising from its use.
-
-Poznámka: Tento dokument (a jeho části) byl vytvořen za pomoci umělé inteligence. Za obsah, funkčnost nebo případné škody neručím.

@@ -1,0 +1,10 @@
+index=tv
+address=romp
+width=1920
+height=1080
+osc_port=8000
+path=media
+audio_device=default
+fadein=3
+fadeout=3
+cross=3
