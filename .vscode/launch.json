@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug own-vp",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/own-vp",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "/usr/bin/gdb",
+            "preLaunchTask": "build own-vp",
+            "miDebuggerArgs": "",
+            "logging": {
+                "moduleLoad": false,
+                "trace": false,
+                "engineLogging": false
+            }
+        }
+    ]
+}

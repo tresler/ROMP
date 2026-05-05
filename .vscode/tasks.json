@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build romp",
+            "type": "shell",
+            "command": "g++ -g main.cpp video_player.cpp utils.cpp -o romp -I/usr/include $(pkg-config --cflags sdl3 sdl3-image sdl3-ttf liblo libavformat libavcodec libswscale libavutil libswresample) -pthread $(pkg-config --libs sdl3 sdl3-image sdl3-ttf liblo libavformat libavcodec libswscale libavutil libswresample)",
+            "args": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Generated task by GitHub Copilot"
+        }
+    ]
+}

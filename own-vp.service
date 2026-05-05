@@ -1,0 +1,38 @@
+[Unit]
+Description=OSC Video Player (Wayland Kiosk)
+After=systemd-user-sessions.service plymouth-quit-wait.service
+Conflicts=getty@tty1.service
+
+[Service]
+User=tomi
+PAMName=login
+WorkingDirectory=/home/tomi/own-osc-player
+
+# Pojistka, kdyby systém nestihl adresář vytvořit včas
+ExecStartPre=+/bin/mkdir -p /run/user/1000
+ExecStartPre=+/bin/chown tomi:tomi /run/user/1000
+
+Environment="XDG_RUNTIME_DIR=/run/user/1000"
+
+# TOTO PŘIDÁVÁME:
+# 1. Ignoruje chybějící myš a klávesnici
+Environment="WLR_LIBINPUT_NO_DEVICES=1"
+# 2. Vnutí spolehlivé OpenGL ES vykreslování
+Environment="WLR_RENDERER=gles2"
+
+# Přidán parametr '-d' pro plný debug log kompozitoru Cage
+ExecStart=/bin/bash -c '/usr/bin/cage -d -s -- env SDL_VIDEO_DRIVER=wayland SDL_LOG_ALL=debug /home/tomi/own-osc-player/own-osc-player > /home/tomi/own-osc-player/cage_debug.log 2>&1'
+
+StandardInput=tty
+StandardOutput=journal
+StandardError=journal
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=yes
+
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
