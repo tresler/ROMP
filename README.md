@@ -70,12 +70,16 @@ Note: You can omit `index` to send commands to the single running instance (glob
 
 ### Example `setup.txt`:
 ```text
-index=1
+index=tv
 address=romp
 width=1920
 height=1080
 osc_port=8000
 path=/home/pi/media
+audio_device=jack
+fadein=2
+fadeout=2
+cross=2
 ```
 
 ## OSC Interface (Addresses and Examples)
@@ -93,6 +97,7 @@ The default OSC root address is `/romp`. The program supports addresses with a s
 | `/<address>/<index>/speed` | `float` multiplier | Set playback speed (0.1 - 4.0) |
 
 *Example:* `oscsend 192.168.1.10 8000 /romp/1/play s "video.mp4"`
+*Example (multicast):* `oscsend 192.168.1.255 8000 /romp/fadeout i 10`
 
 ## Deployment and Tips
 - For kiosk deployment, use the systemd service or a Wayland kiosk (e.g., `cage`) in kiosk mode.
@@ -102,5 +107,4 @@ The default OSC root address is `/romp`. The program supports addresses with a s
 ROMP is open-source. If you improve the code, fix a bug, or add a feature, please share your changes back via a Pull Request! This project is licensed under the MIT License.
 
 ## Disclaimer
-
-This README (and parts of this project's documentation) was created with the assistance of AI. Use the software and documentation at your own risk — the author(s) provide no warranty and accept no responsibility for any damage, data loss, or other consequences arising from its use.
+This program (and this project's documentation) was created with the assistance of AI. Use the software and documentation at your own risk — the author(s) provide no warranty and accept no responsibility for any damage, data loss, or other consequences arising from its use.
