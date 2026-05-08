@@ -96,12 +96,30 @@ The default OSC root address is `/romp`. The program supports addresses with a s
 | `/<address>/<index>/info` | - | Toggle status overlay |
 | `/<address>/<index>/speed` | `float` multiplier | Set playback speed (0.1 - 4.0) |
 
-*Example:* `oscsend 192.168.1.10 8000 /romp/1/play s "video.mp4"`
-*Example (multicast):* `oscsend 192.168.1.255 8000 /romp/fadeout i 10`
+*Example:* `oscsend 192.168.1.10 8000 /romp/1/play s "video.mp4"`  
+*Example (multicast):* `oscsend 255.255.255.255 8000 /romp/fadeout i 10`
 
 ## Deployment and Tips
 - For kiosk deployment, use the systemd service or a Wayland kiosk (e.g., `cage`) in kiosk mode.
 - Place `setup.txt` into `~/.romp/setup.txt` for persistent per-user configuration.
+
+### Remote File Transfer (SCP via SSH)
+To easily transfer media files to your Raspberry Pi, you can use `scp` (Secure Copy Protocol) over SSH.
+
+1.  **Enable SSH on Raspberry Pi OS:**
+    *   On a desktop environment, go to `Raspberry Pi Configuration` -> `Interfaces` tab and enable SSH.
+    *   From the command line, run `sudo raspi-config`, navigate to `Interface Options` -> `SSH`, and enable it.
+    *   Alternatively, create an empty file named `ssh` (no extension) in the boot partition of your SD card.
+
+2.  **Accessing via `raspberrypi.local` (mDNS/Avahi):**
+    Your Raspberry Pi can often be accessed by its hostname followed by `.local` (e.g., `raspberrypi.local`) without needing its IP address. This relies on mDNS (multicast DNS) / Avahi. Ensure `avahi-daemon` is running on your Raspberry Pi (`sudo systemctl status avahi-daemon`). On your client machine (e.g., Windows, macOS, Linux), ensure mDNS is supported (macOS/Linux usually have it by default; Windows might need Bonjour Print Services or iTunes installed).
+
+3.  **Copying files with `scp`:**
+    Once SSH is enabled and mDNS is working (or you know the Pi's IP address), you can copy files from your computer to the Raspberry Pi:
+    ```bash
+    scp /path/to/your/video.mp4 user@raspberrypi.local:~/.romp/media/
+    ```
+    Replace `/path/to/your/video.mp4` with the actual path to your media file, `user` with your Raspberry Pi username (e.g., `pi`), and `raspberrypi.local` with your Pi's hostname if you've changed it (e.g., `myromp.local`). The `~/.romp/media/` is the default media directory for ROMP.
 
 ## Contributing and License
 ROMP is open-source. If you improve the code, fix a bug, or add a feature, please share your changes back via a Pull Request! This project is licensed under the MIT License.

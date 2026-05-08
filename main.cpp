@@ -285,7 +285,7 @@ int main(int argc, char* argv[]) {
 
             while (currentRetryAttempt < MAX_LOAD_RETRIES && !loadSuccess) {
                 currentRetryAttempt++;
-                std::cout << "Pokus o načtení média '" << fullVideoPath << "', pokus #" << currentRetryAttempt << "/" << MAX_LOAD_RETRIES << std::endl;
+                std::cout << "Attempting to load media '" << fullVideoPath << "', attempt #" << currentRetryAttempt << "/" << MAX_LOAD_RETRIES << std::endl;
 
             // Zjisti příponu pomocí moderního C++17 std::filesystem
             std::string ext = std::filesystem::path(fullVideoPath).extension().string();
@@ -389,7 +389,7 @@ int main(int argc, char* argv[]) {
                 }
 
                 if (videoStreamIndex == -1 && !isAudioFile) {
-                    std::cerr << "Nebyl nalezen video stream!" << std::endl;
+                    std::cerr << "No video stream found!" << std::endl;
                     avformat_close_input(&formatContext);
                     videoLoaded = false;
                     imageLoaded = false;
@@ -497,7 +497,7 @@ int main(int argc, char* argv[]) {
                 if (hw_codec) {
                     codecContext = avcodec_alloc_context3(hw_codec);
                     if (!codecContext) {
-                        std::cerr << "Chyba: Nelze alokovat kontext pro HW dekodér (" << hw_codec->name << ")." << std::endl;
+                        std::cerr << "Error: Cannot allocate context for HW decoder (" << hw_codec->name << ")." << std::endl;
                         // Fallback to SW will be handled below
                     } else {
                         avcodec_parameters_to_context(codecContext, codecParameters);
@@ -513,9 +513,9 @@ int main(int argc, char* argv[]) {
                                     if (av_hwdevice_ctx_create(&hw_device_ctx, config->device_type, nullptr, nullptr, 0) == 0) {
                                         hw_type_generic = config->device_type;
                                         hw_pix_fmt = config->pix_fmt;
-                                        codecContext->get_format = get_hw_format;
+                                        codecContext->get_format = get_hw_format; // Set callback for HW format negotiation
                                         codecContext->hw_device_ctx = av_buffer_ref(hw_device_ctx);
-                                        std::cout << "Úspěšně inicializována obecná HW akcelerace kontextu: " << av_hwdevice_get_type_name(hw_type_generic) << std::endl;
+                                        std::cout << "Successfully initialized general HW acceleration context: " << av_hwdevice_get_type_name(hw_type_generic) << std::endl;
                                         hw_init_success = true;
                                         break;
                                     }
@@ -735,7 +735,7 @@ int main(int argc, char* argv[]) {
                     }
                     if (!firstFrameDecoded) {
                         firstFrameDecoded = true;
-                        std::cout << "První snímek dekódován, uvolňuji zobrazení." << std::endl;
+                        std::cout << "First frame decoded, releasing display." << std::endl;
                     }
                     needsRedraw = true;
                 }

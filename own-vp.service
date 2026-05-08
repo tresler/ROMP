@@ -8,16 +8,16 @@ User=tomi
 PAMName=login
 WorkingDirectory=/home/tomi/own-osc-player
 
-# Pojistka, kdyby systém nestihl adresář vytvořit včas
+# Safeguard, in case the system fails to create the directory in time
 ExecStartPre=+/bin/mkdir -p /run/user/1000
 ExecStartPre=+/bin/chown tomi:tomi /run/user/1000
 
 Environment="XDG_RUNTIME_DIR=/run/user/1000"
 
-# TOTO PŘIDÁVÁME:
-# 1. Ignoruje chybějící myš a klávesnici
+# WE ARE ADDING THIS:
+# 1. Ignores missing mouse and keyboard
 Environment="WLR_LIBINPUT_NO_DEVICES=1"
-# 2. Vnutí spolehlivé OpenGL ES vykreslování
+# 2. Forces reliable OpenGL ES rendering
 Environment="WLR_RENDERER=gles2"
 
 # Přidán parametr '-d' pro plný debug log kompozitoru Cage
