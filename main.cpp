@@ -122,7 +122,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    message = "ROMP System [" + oscAddress + "] Ready on Index: " + deviceId + "\nIP: " + ipAddress;
+    message = "ROMP System is ready on:\n/" + oscAddress + "/" + deviceId + "/";
     createTextTextures(renderer, font, message, textTextures, textRects, window);
     needsRedraw = true;
 
@@ -173,9 +173,6 @@ int main(int argc, char* argv[]) {
             if (newIp != "0.0.0.0") {
                 ipAddress = newIp;
                 std::cout << "IP acquired: " << ipAddress << std::endl;
-                message = "ROMP System [" + oscAddress + "] Ready on Index: " + deviceId + "\nIP: " + ipAddress;
-                createTextTextures(renderer, font, message, textTextures, textRects, window);
-                needsRedraw = true;
             }
         }
 
@@ -188,13 +185,11 @@ int main(int argc, char* argv[]) {
 
             // Refresh info on 'i'
             if (e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_I) {
-                std::string newIp = getIPAddress();
-                if (newIp != ipAddress && newIp != "0.0.0.0") {
-                    ipAddress = newIp;
-                    std::cout << "IP updated: " << ipAddress << std::endl;
+                showMessage = !showMessage;
+                // If we show it again, ensure the layout is correct
+                if (showMessage) {
+                    createTextTextures(renderer, font, message, textTextures, textRects, window);
                 }
-                message = "ROMP System [" + oscAddress + "] Ready on Index: " + deviceId + "\nIP: " + ipAddress;
-                createTextTextures(renderer, font, message, textTextures, textRects, window);
                 needsRedraw = true;
             }
 
@@ -210,9 +205,12 @@ int main(int argc, char* argv[]) {
                 tenSecondAfterStart = true;
                 if (showMessage) {
                     showMessage = false;
-                    needsRedraw = true;
                 }
-                std::cout << "ROMP Startup info auto-hidden." << std::endl;
+                if (imageLoaded && !videoLoaded) {
+                    imageLoaded = false;
+                }
+                needsRedraw = true;
+                std::cout << "ROMP Startup info and splash auto-hidden." << std::endl;
             }
         }
 

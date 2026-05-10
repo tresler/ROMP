@@ -433,7 +433,7 @@ void createTextTextures(SDL_Renderer* renderer, TTF_Font* font, const std::strin
         SDL_DestroySurface(textSurface);
     }
 
-    yOffset = (windowHeight - totalHeight) / 2;
+    yOffset = windowHeight - totalHeight - 40; // Align to bottom with 40px margin
 
     for (const std::string& line : lines) {
         SDL_Surface* textSurface = TTF_RenderText_Blended(font, line.c_str(), 0, textColor);
